@@ -5,15 +5,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pet Fighting</title>
+  <script src="/scripts/PetFighting.js"></script>
 </head>
 
 <body>
   <h1>Pet Fighting 💦🔥🌿</h1>
-  <div>
-    <button>Agua 💦</button>
-    <button>Fuego 🔥</button>
-    <button>Tierra 🌿</button>
-  </div>
+  <section id="seleccionar-mascota">
+    <h2>Elige tu mascota</h2>
+
+    <label for="Draco">Draco</label>
+    <input type="radio" name="mascota" id="Draco">
+
+    <label for="Molly">Molly</label>
+    <input type="radio" name="mascota" id="Molly">
+
+    <label for="Viole">Viole</label>
+    <input type="radio" name="mascota" id="Viole">
+
+    <label for="Rex">Rex</label>
+    <input type="radio" name="mascota" id="Rex">
+
+    <label for="Tron">Tron</label>
+    <input type="radio" name="mascota" id="Tron">
+
+    <label for="Mota">Mota</label>
+    <input type="radio" name="mascota" id="Mota">
+    <!--Draco = Fuego
+      Molly = Tierra
+      Viole = Agua
+      Rex = Agua y Fuego
+      Tron = Agua y Tierra
+      Mota = Tierra y Fuego -->
+
+    <button id="boton-seleccionar-mascota">Seleccionar</button>
+  </section>
+
+  <section id="seleccionar-ataque">
+    <h2>Elige tu ataque</h2>
+
+    <p>Tu masota <span id="nombre_mascota_jugador">X</span> Tiene <span id="vidas_jugador">Y</span> vidas</p>
+    <p>La mascota de tu enemigo <span id="nombre_mascota_enemigo">Z</span> tiene <span id="vidas_enemigo">T</span> vidas
+    </p>
+
+    <div>
+      <button id="boton-agua">Agua 💦</button>
+      <button id="boton-fuego">Fuego 🔥</button>
+      <button id="boton-tierra">Tierra 🌿</button>
+    </div>
+  </section>
+
+  <section id="mensajes">
+    <p>Haz atacado con fuego, tu enemigo ataco con tierra</p>
+  </section>
+
+  <section id="reiniciar">
+    <button id="boton-reiniciar">Reiniciar</button>
+  </section>
+
 </body>
 
 </html>
