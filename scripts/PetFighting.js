@@ -28,7 +28,7 @@ function iniciarJuego() {
 
 function seleccionarMascota() {
   let secciónAtaques = document.getElementById("seleccionar-ataque");
-  secciónAtaques.style.display = "block";
+  secciónAtaques.style.display = "flex";
 
   let secciónMascotas = document.getElementById("seleccionar-mascota");
   secciónMascotas.style.display = "none";
@@ -143,11 +143,11 @@ function revisarVidas() {
 }
 
 function crearMensajeFinal(resultadoFinal) {
-  let secciónMensajes = document.getElementById("mensajes");
+  let secciónMensajes = document.getElementById("resultado");
 
-  let párrafo = document.createElement("p");
-  párrafo.innerHTML = resultadoFinal;
-  secciónMensajes.appendChild(párrafo);
+  /*  let párrafo = document.createElement("p"); */
+  secciónMensajes.innerHTML = resultadoFinal;
+  /* secciónMensajes.appendChild(párrafo); */
 
   let botonAgua = document.getElementById("boton-agua");
   botonAgua.disabled = true;
@@ -160,11 +160,21 @@ function crearMensajeFinal(resultadoFinal) {
 }
 
 function crearMensaje(resultado) {
-  let secciónMensajes = document.getElementById("mensajes");
+  let secciónMensajes = document.getElementById("resultado");
+  let ataqueDeJugador = document.getElementById("ataque-jugador");
+  let ataqueDeEnemigo = document.getElementById("ataque-enemigo");
 
-  let párrafo = document.createElement("p");
-  párrafo.innerHTML = `Haz atacado con ${ataqueJugador}, tu enemigo ataco con ${ataqueEnemigo}, ${resultado}`;
-  secciónMensajes.appendChild(párrafo);
+  /*   let notificación = document.createElement("p"); */
+  let nuevoAtaqueJugador = document.createElement("p");
+  let nuevoAtaqueEnemigo = document.createElement("p");
+
+  secciónMensajes.innerHTML = resultado;
+  nuevoAtaqueJugador.innerHTML = ataqueJugador;
+  nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo;
+
+  /*   /*   secciónMensajes.appendChild(notificación);*/
+  ataqueDeJugador.appendChild(nuevoAtaqueJugador);
+  ataqueDeEnemigo.appendChild(nuevoAtaqueEnemigo);
 }
 
 function aleatorio(min, max) {

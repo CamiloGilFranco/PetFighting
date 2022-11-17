@@ -1,0 +1,130 @@
+@font-face {
+  font-family: "mi-fuente";
+  src: url(/assets/October\ Crow.ttf);
+}
+
+body {
+  font-family: "mi-fuente";
+  background-color: #1746a2;
+}
+
+.titulo {
+  font-size: 60px;
+  color: sandybrown;
+  margin: 30px;
+}
+
+.subtitulo {
+  color: #fff7e9;
+  font-size: 40px;
+}
+
+.sección {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.tarjetas {
+  display: flex;
+  gap: 10px;
+  font-weight: bolder;
+  font-size: 25px;
+  height: 170px;
+}
+
+.tarjeta-de-petFighting {
+  width: 150px;
+  height: 150px;
+  background-color: #ff731d;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border-style: solid;
+  border: black solid 3px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tarjeta-de-petFighting p {
+  margin: 0;
+  text-orientation: upright;
+  writing-mode: vertical-rl;
+}
+
+.tarjetas img {
+  width: 100px;
+  height: auto;
+}
+
+button {
+  font-family: "mi-fuente";
+  font-size: 30px;
+  font-weight: bolder;
+  width: 300px;
+  height: 50px;
+  background-color: #fff7e9;
+  color: #1746a2;
+  padding: px;
+  margin: 0;
+  border-radius: 10px;
+}
+
+input {
+  display: none;
+}
+
+input:checked + label {
+  background-color: red;
+}
+
+#seleccionar-ataque {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+#mensajes {
+  font-size: 30px;
+  width: 280px;
+  border: 3px black solid;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.boton-ataque {
+  background-color: white;
+}
+
+.combate {
+  display: grid;
+  grid-template-columns: 100px 100px;
+}
+
+.botonera-ataques {
+  display: flex;
+  gap: 10px;
+}
+
+.ataques-jugador,
+.ataques-enemigo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 360px) {
+  .tarjetas,
+  .botonera-ataques {
+    flex-direction: column;
+  }
+}

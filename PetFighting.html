@@ -5,31 +5,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pet Fighting</title>
+  <link rel="stylesheet" href="/styles.css">
   <script src="/scripts/PetFighting.js"></script>
 </head>
 
 <body>
-  <h1>Pet Fighting 💦🔥🌿</h1>
-  <section id="seleccionar-mascota">
-    <h2>Elige tu mascota</h2>
+  <section id="seleccionar-mascota" class="sección">
+    <h1 class="titulo" id="titulo-principal">Pet Fighting 💦🔥🌿</h1>
+    <h2 class="subtitulo">Elige tu mascota</h2>
 
-    <label for="Draco">Draco</label>
-    <input type="radio" name="mascota" id="Draco">
+    <div class="tarjetas">
+      <input type="radio" name="mascota" id="Draco">
+      <label for="Draco" class="tarjeta-de-petFighting">
+        <p>
+          Draco
+        </p>
+        <img src="/assets/dracoF.png" alt="">
+      </label>
 
-    <label for="Molly">Molly</label>
-    <input type="radio" name="mascota" id="Molly">
+      <input type="radio" name="mascota" id="Molly">
+      <label for="Molly" class="tarjeta-de-petFighting">
+        <p>
+          Molly
+        </p>
+        <img src="/assets/mollyF.png" alt="">
+      </label>
 
-    <label for="Viole">Viole</label>
-    <input type="radio" name="mascota" id="Viole">
+      <input type="radio" name="mascota" id="Viole">
+      <label for="Viole" class="tarjeta-de-petFighting">
+        <p>
+          Viole
+        </p>
+        <img src="/assets/violeF.png" alt="">
+      </label>
 
-    <label for="Rex">Rex</label>
-    <input type="radio" name="mascota" id="Rex">
+      <input type="radio" name="mascota" id="Rex">
+      <label for="Rex" class="tarjeta-de-petFighting">
+        <p>
+          Rex
+        </p>
+        <img src="/assets/rexF.png" alt="">
+      </label>
 
-    <label for="Tron">Tron</label>
-    <input type="radio" name="mascota" id="Tron">
+      <input type="radio" name="mascota" id="Tron">
+      <label for="Tron" class="tarjeta-de-petFighting">
+        <p>
+          Tron
+        </p>
+        <img src="/assets/tronF.png" alt="">
+      </label>
 
-    <label for="Mota">Mota</label>
-    <input type="radio" name="mascota" id="Mota">
+      <input type="radio" name="mascota" id="Mota">
+      <label for="Mota" class="tarjeta-de-petFighting">
+        <p>
+          Mota
+        </p>
+        <img src="/assets/motaF.png" alt="">
+      </label>
+    </div>
+
     <!--Draco = Fuego
       Molly = Tierra
       Viole = Agua
@@ -37,25 +71,38 @@
       Tron = Agua y Tierra
       Mota = Tierra y Fuego -->
 
-    <button id="boton-seleccionar-mascota">Seleccionar</button>
+    <button id="boton-seleccionar-mascota" class="seccion">Seleccionar</button>
   </section>
 
   <section id="seleccionar-ataque">
-    <h2>Elige tu ataque</h2>
+    <h1 class="titulo" id="titulo-principal">Pet Fighting 💦🔥🌿</h1>
+    <h2 class="subtitulo">Elige tu ataque</h2>
 
-    <p>Tu mascota <span id="nombre_mascota_jugador"></span> Tiene <span id="vidas_jugador">3</span> vidas</p>
-    <p>La mascota de tu enemigo <span id="nombre_mascota_enemigo"></span> tiene <span id="vidas_enemigo">3</span> vidas
-    </p>
 
-    <div>
-      <button id="boton-agua">Agua 💦</button>
-      <button id="boton-fuego">Fuego 🔥</button>
-      <button id="boton-tierra">Tierra 🌿</button>
+    <div class="botonera-ataques">
+      <button id="boton-agua" class="boton-ataque">Agua 💦</button>
+      <button id="boton-fuego" class="boton-ataque">Fuego 🔥</button>
+      <button id="boton-tierra" class="boton-ataque">Tierra 🌿</button>
     </div>
-  </section>
 
-  <section id="mensajes">
+    <div id="mensajes">
+      <p id="resultado">READY!!!</p>
+    </div>
 
+
+    <div class="combate">
+      <div class="ataques-jugador">
+        <p id="vidas_jugador">3</p>
+        <p id="nombre_mascota_jugador"></p>
+        <p id="ataque-jugador"></p>
+      </div>
+      <div class="ataques-enemigo">
+        <p id="vidas_enemigo">3</p>
+        <p id="nombre_mascota_enemigo"></p>
+        <p id="ataque-enemigo"></p>
+      </div>
+      </p>
+    </div>
   </section>
 
   <section id="reiniciar">
