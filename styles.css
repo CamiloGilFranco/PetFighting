@@ -103,6 +103,7 @@ input:checked + label {
 
 .boton-ataque {
   background-color: white;
+  width: 120px;
 }
 
 .combate {

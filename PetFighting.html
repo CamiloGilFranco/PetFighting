@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pet Fighting</title>
   <link rel="stylesheet" href="/styles.css">
-  <script src="/scripts/PetFighting.js"></script>
 </head>
 
 <body>
@@ -14,62 +13,10 @@
     <h1 class="titulo" id="titulo-principal">Pet Fighting 💦🔥🌿</h1>
     <h2 class="subtitulo">Elige tu mascota</h2>
 
-    <div class="tarjetas">
-      <input type="radio" name="mascota" id="Draco">
-      <label for="Draco" class="tarjeta-de-petFighting">
-        <p>
-          Draco
-        </p>
-        <img src="/assets/dracoF.png" alt="">
-      </label>
+    <div id="contenedor-tarjetas" class="tarjetas">
 
-      <input type="radio" name="mascota" id="Molly">
-      <label for="Molly" class="tarjeta-de-petFighting">
-        <p>
-          Molly
-        </p>
-        <img src="/assets/mollyF.png" alt="">
-      </label>
-
-      <input type="radio" name="mascota" id="Viole">
-      <label for="Viole" class="tarjeta-de-petFighting">
-        <p>
-          Viole
-        </p>
-        <img src="/assets/violeF.png" alt="">
-      </label>
-
-      <input type="radio" name="mascota" id="Rex">
-      <label for="Rex" class="tarjeta-de-petFighting">
-        <p>
-          Rex
-        </p>
-        <img src="/assets/rexF.png" alt="">
-      </label>
-
-      <input type="radio" name="mascota" id="Tron">
-      <label for="Tron" class="tarjeta-de-petFighting">
-        <p>
-          Tron
-        </p>
-        <img src="/assets/tronF.png" alt="">
-      </label>
-
-      <input type="radio" name="mascota" id="Mota">
-      <label for="Mota" class="tarjeta-de-petFighting">
-        <p>
-          Mota
-        </p>
-        <img src="/assets/motaF.png" alt="">
-      </label>
     </div>
 
-    <!--Draco = Fuego
-      Molly = Tierra
-      Viole = Agua
-      Rex = Agua y Fuego
-      Tron = Agua y Tierra
-      Mota = Tierra y Fuego -->
 
     <button id="boton-seleccionar-mascota" class="seccion">Seleccionar</button>
   </section>
@@ -79,10 +26,7 @@
     <h2 class="subtitulo">Elige tu ataque</h2>
 
 
-    <div class="botonera-ataques">
-      <button id="boton-agua" class="boton-ataque">Agua 💦</button>
-      <button id="boton-fuego" class="boton-ataque">Fuego 🔥</button>
-      <button id="boton-tierra" class="boton-ataque">Tierra 🌿</button>
+    <div id="contenedor-ataques" class="botonera-ataques">
     </div>
 
     <div id="mensajes">
@@ -92,12 +36,12 @@
 
     <div class="combate">
       <div class="ataques-jugador">
-        <p id="vidas_jugador">3</p>
+        <p id="vidas_jugador">0</p>
         <p id="nombre_mascota_jugador"></p>
         <p id="ataque-jugador"></p>
       </div>
       <div class="ataques-enemigo">
-        <p id="vidas_enemigo">3</p>
+        <p id="vidas_enemigo">0</p>
         <p id="nombre_mascota_enemigo"></p>
         <p id="ataque-enemigo"></p>
       </div>
@@ -109,6 +53,7 @@
     <button id="boton-reiniciar">Reiniciar</button>
   </section>
 
+  <script src="/scripts/PetFighting.js"></script>
 </body>
 
 </html>
