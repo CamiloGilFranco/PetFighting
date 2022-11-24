@@ -19,6 +19,9 @@ const ataqueDeEnemigo = document.getElementById("ataque-enemigo");
 const contenedorTarjetas = document.getElementById("contenedor-tarjetas");
 const contenedorAtaques = document.getElementById("contenedor-ataques");
 
+const sectionVerMapa = document.getElementById("ver-mapa");
+const mapa = document.getElementById("mapa");
+
 let pets = [];
 let ataqueJugador = [];
 let ataqueEnemigo = [];
@@ -30,6 +33,7 @@ let inputRex;
 let inputTron;
 let inputMota;
 let mascotaJugador;
+let mascotaJugadorObjeto;
 let ataquesPet;
 let botonAgua;
 let botonFuego;
@@ -42,24 +46,82 @@ let victoriasJugador = 0;
 let victoriasEnemigo = 0;
 let vidasEnemigo = 3;
 let vidasJugador = 3;
+let lienzo = mapa.getContext("2d");
+let intervalo;
+let mapaFondo = new Image();
+mapaFondo.src = "/assets/map.png";
+let alturaEsperada;
+let anchoDelMapa = window.innerWidth - 20;
+const anchoMáximoMapa = 350;
+
+if (anchoDelMapa > anchoMáximoMapa) {
+  anchoDelMapa = anchoMáximoMapa - 20;
+}
+
+alturaEsperada = (anchoDelMapa * 600) / 800;
+
+mapa.width = anchoDelMapa;
+mapa.height = alturaEsperada;
 
 class Pet {
-  constructor(nombre, foto, vida) {
+  constructor(nombre, foto, fotoC, vida) {
     this.nombre = nombre;
     this.foto = foto;
+    this.fotoC = fotoC;
     this.vida = vida;
     this.ataques = [];
+    this.ancho = 30;
+    this.alto = 30;
+    this.x = aleatorio(0, mapa.width - this.ancho);
+    this.y = aleatorio(0, mapa.height - this.alto);
+    this.mapaFoto = new Image();
+    this.mapaFoto.src = fotoC;
+    this.velocidadX = 0;
+    this.velocidadY = 0;
+  }
+
+  pintarPet() {
+    lienzo.drawImage(this.mapaFoto, this.x, this.y, this.ancho, this.alto);
   }
 }
 
-let Draco = new Pet("Draco", "/assets/dracoF.png", 5);
-let Molly = new Pet("Molly", "/assets/mollyF.png", 5);
-let Viole = new Pet("Viole", "/assets/violeF.png", 5);
-let Rex = new Pet("Rex", "/assets/rexF.png", 5);
-let Tron = new Pet("Tron", "/assets/tronF.png", 5);
-let Mota = new Pet("Mota", "/assets/motaF.png", 5);
+let Draco = new Pet("Draco", "/assets/dracoF.png", "/assets/dracoC.png", 5);
+let Molly = new Pet("Molly", "/assets/mollyF.png", "/assets/mollyC.png", 5);
+let Viole = new Pet("Viole", "/assets/violeF.png", "/assets/violeC.png", 5);
+let Rex = new Pet("Rex", "/assets/rexF.png", "/assets/rexC.png", 5);
+let Tron = new Pet("Tron", "/assets/tronF.png", "/assets/tronC.png", 5);
+let Mota = new Pet("Mota", "/assets/motaF.png", "/assets/motaC.png", 5);
+
+let DracoEnemigo = new Pet(
+  "Draco",
+  "/assets/dracoF.png",
+  "/assets/dracoC.png",
+  5
+);
+let MollyEnemigo = new Pet(
+  "Molly",
+  "/assets/mollyF.png",
+  "/assets/mollyC.png",
+  5
+);
+let VioleEnemigo = new Pet(
+  "Viole",
+  "/assets/violeF.png",
+  "/assets/violeC.png",
+  5
+);
+let RexEnemigo = new Pet("Rex", "/assets/rexF.png", "/assets/rexC.png", 5);
+let TronEnemigo = new Pet("Tron", "/assets/tronF.png", "/assets/tronC.png", 5);
+let MotaEnemigo = new Pet("Mota", "/assets/motaF.png", "/assets/motaC.png", 5);
 
 Draco.ataques.push(
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "🌿", id: "boton-tierra" }
+);
+DracoEnemigo.ataques.push(
   { nombre: "🔥", id: "boton-fuego" },
   { nombre: "🔥", id: "boton-fuego" },
   { nombre: "🔥", id: "boton-fuego" },
@@ -74,8 +136,22 @@ Molly.ataques.push(
   { nombre: "🔥", id: "boton-fuego" },
   { nombre: "💦", id: "boton-agua" }
 );
+MollyEnemigo.ataques.push(
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "💦", id: "boton-agua" }
+);
 
 Viole.ataques.push(
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🔥", id: "boton-fuego" }
+);
+VioleEnemigo.ataques.push(
   { nombre: "💦", id: "boton-agua" },
   { nombre: "💦", id: "boton-agua" },
   { nombre: "💦", id: "boton-agua" },
@@ -90,8 +166,22 @@ Rex.ataques.push(
   { nombre: "🌿", id: "boton-tierra" },
   { nombre: "💦", id: "boton-agua" }
 );
+RexEnemigo.ataques.push(
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "💦", id: "boton-agua" }
+);
 
 Tron.ataques.push(
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "🌿", id: "boton-tierra" }
+);
+TronEnemigo.ataques.push(
   { nombre: "🔥", id: "boton-fuego" },
   { nombre: "🔥", id: "boton-fuego" },
   { nombre: "💦", id: "boton-agua" },
@@ -106,11 +196,19 @@ Mota.ataques.push(
   { nombre: "🌿", id: "boton-tierra" },
   { nombre: "🔥", id: "boton-fuego" }
 );
+MotaEnemigo.ataques.push(
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🔥", id: "boton-fuego" }
+);
 
 pets.push(Draco, Molly, Viole, Rex, Tron, Mota);
 
 function iniciarJuego() {
   secciónAtaques.style.display = "none";
+  sectionVerMapa.style.display = "none";
 
   pets.forEach((pet) => {
     opciónPet = `
@@ -135,8 +233,6 @@ function iniciarJuego() {
 }
 
 function seleccionarMascota() {
-  secciónAtaques.style.display = "flex";
-
   secciónMascotas.style.display = "none";
 
   if (inputDraco.checked) {
@@ -163,7 +259,8 @@ function seleccionarMascota() {
 
   extraerAtaques(mascotaJugador);
 
-  seleccionarMascotaEnemigo();
+  sectionVerMapa.style.display = "flex";
+  iniciarMapa();
 }
 
 function extraerAtaques(mascotaJugador) {
@@ -213,11 +310,9 @@ function secuenciaAtaque() {
   });
 }
 
-function seleccionarMascotaEnemigo() {
-  let mascotaAleatoria = aleatorio(0, pets.length - 1);
-
-  nombreMascotaEnemigo.innerHTML = pets[mascotaAleatoria].nombre;
-  ataquesPetEnemigo = pets[mascotaAleatoria].ataques;
+function seleccionarMascotaEnemigo(enemigo) {
+  nombreMascotaEnemigo.innerHTML = enemigo.nombre;
+  ataquesPetEnemigo = enemigo.ataques;
   secuenciaAtaque();
 }
 
@@ -315,4 +410,110 @@ function aleatorio(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function pintarPersonaje() {
+  mascotaJugadorObjeto.x += mascotaJugadorObjeto.velocidadX;
+  mascotaJugadorObjeto.y += mascotaJugadorObjeto.velocidadY;
+  lienzo.clearRect(0, 0, mapa.clientWidth, mapa.height);
+  lienzo.drawImage(mapaFondo, 0, 0, mapa.width, mapa.height);
+  mascotaJugadorObjeto.pintarPet();
+  DracoEnemigo.pintarPet();
+  MollyEnemigo.pintarPet();
+  VioleEnemigo.pintarPet();
+  RexEnemigo.pintarPet();
+  TronEnemigo.pintarPet();
+  MotaEnemigo.pintarPet();
+
+  if (
+    mascotaJugadorObjeto.velocidadX !== 0 ||
+    mascotaJugadorObjeto.velocidadY !== 0
+  ) {
+    revisarColisión(DracoEnemigo);
+    revisarColisión(MollyEnemigo);
+    revisarColisión(VioleEnemigo);
+    revisarColisión(RexEnemigo);
+    revisarColisión(TronEnemigo);
+    revisarColisión(MotaEnemigo);
+  }
+}
+
+function moverDerecha() {
+  mascotaJugadorObjeto.velocidadX = 2;
+}
+
+function moverIzquierda() {
+  mascotaJugadorObjeto.velocidadX = -2;
+}
+
+function moverArriba() {
+  mascotaJugadorObjeto.velocidadY = -2;
+}
+
+function moverAbajo() {
+  mascotaJugadorObjeto.velocidadY = 2;
+}
+
+function detenerMovimiento() {
+  mascotaJugadorObjeto.velocidadX = 0;
+  mascotaJugadorObjeto.velocidadY = 0;
+}
+
+function sePresionoUnaTecla(event) {
+  switch (event.key) {
+    case "ArrowUp":
+      moverArriba();
+      break;
+    case "ArrowDown":
+      moverAbajo();
+      break;
+    case "ArrowLeft":
+      moverIzquierda();
+      break;
+    case "ArrowRight":
+      moverDerecha();
+      break;
+    default:
+      break;
+  }
+}
+
+function iniciarMapa() {
+  mascotaJugadorObjeto = obtenerObjetoMascota(mascotaJugador);
+  intervalo = setInterval(pintarPersonaje, 50);
+
+  window.addEventListener("keydown", sePresionoUnaTecla);
+  window.addEventListener("keyup", detenerMovimiento);
+}
+
+function obtenerObjetoMascota() {
+  for (let i = 0; i < pets.length; i++) {
+    if (mascotaJugador === pets[i].nombre) {
+      return pets[i];
+    }
+  }
+}
+
+function revisarColisión(enemigo) {
+  const arribaEnemigo = enemigo.y;
+  const abajoEnemigo = enemigo.y + enemigo.alto;
+  const derechaEnemigo = enemigo.x + enemigo.ancho;
+  const izquierdaEnemigo = enemigo.x;
+
+  const arribaMascota = mascotaJugadorObjeto.y;
+  const abajoMascota = mascotaJugadorObjeto.y + mascotaJugadorObjeto.alto;
+  const derechaMascota = mascotaJugadorObjeto.x + mascotaJugadorObjeto.ancho;
+  const izquierdaMascota = mascotaJugadorObjeto.x;
+  if (
+    abajoMascota < arribaEnemigo ||
+    arribaMascota > abajoEnemigo ||
+    derechaMascota < izquierdaEnemigo ||
+    izquierdaMascota > izquierdaEnemigo
+  ) {
+    return;
+  }
+  detenerMovimiento();
+  clearInterval(intervalo);
+  secciónAtaques.style.display = "flex";
+  sectionVerMapa.style.display = "none";
+  seleccionarMascotaEnemigo(enemigo);
+}
 window.addEventListener("load", iniciarJuego);
