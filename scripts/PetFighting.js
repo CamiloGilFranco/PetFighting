@@ -22,6 +22,7 @@ const contenedorAtaques = document.getElementById("contenedor-ataques");
 const sectionVerMapa = document.getElementById("ver-mapa");
 const mapa = document.getElementById("mapa");
 
+let jugadorId = null;
 let pets = [];
 let ataqueJugador = [];
 let ataqueEnemigo = [];
@@ -230,6 +231,19 @@ function iniciarJuego() {
 
   botonSeleccionarMascota.addEventListener("click", seleccionarMascota);
   botonReiniciar.addEventListener("click", reiniciarJuego);
+
+  unirseAlJuego();
+}
+
+function unirseAlJuego() {
+  fetch("http://localHost:8080/unirse").then(function (res) {
+    if (res.ok) {
+      res.text().then(function (respuesta) {
+        console.log(respuesta);
+        jugadorId = respuesta;
+      });
+    }
+  });
 }
 
 function seleccionarMascota() {
@@ -257,10 +271,20 @@ function seleccionarMascota() {
     alert("No haz seleccionado una mascota");
   }
 
+  seleccionarPet(mascotaJugador);
+
   extraerAtaques(mascotaJugador);
 
   sectionVerMapa.style.display = "flex";
   iniciarMapa();
+}
+
+function seleccionarPet(mascotaJugador) {
+  fetch(`http://localhost:8080/pet/${jugadorId}`, {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pet: mascotaJugador }),
+  });
 }
 
 function extraerAtaques(mascotaJugador) {
@@ -416,6 +440,9 @@ function pintarPersonaje() {
   lienzo.clearRect(0, 0, mapa.clientWidth, mapa.height);
   lienzo.drawImage(mapaFondo, 0, 0, mapa.width, mapa.height);
   mascotaJugadorObjeto.pintarPet();
+
+  enviarPosición(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y);
+
   DracoEnemigo.pintarPet();
   MollyEnemigo.pintarPet();
   VioleEnemigo.pintarPet();
@@ -434,6 +461,14 @@ function pintarPersonaje() {
     revisarColisión(TronEnemigo);
     revisarColisión(MotaEnemigo);
   }
+}
+
+function enviarPosición(x, y) {
+  fetch(`http://localhost:8080/pet/${jugadorId}/posición`, {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ x, y }),
+  });
 }
 
 function moverDerecha() {
