@@ -474,7 +474,7 @@ function pintarPersonaje() {
 }
 
 function enviarPosición(x, y) {
-  fetch(`http://localhost:8080/pet/${jugadorId}/posición`, {
+  fetch(`http://localhost:8080/pet/${jugadorId}/posicion`, {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ x, y }),

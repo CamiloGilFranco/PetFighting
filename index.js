@@ -59,7 +59,7 @@ app.post("/pet/:jugadorId", (req, res) => {
   res.end();
 });
 
-app.post("/pet/:jugadorId/posición", (req, res) => {
+app.post("/pet/:jugadorId/posicion", (req, res) => {
   const jugadorId = req.params.jugadorId || "";
   const x = req.body.x || 0;
   const y = req.body.y || 0;
