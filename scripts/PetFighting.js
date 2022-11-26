@@ -23,9 +23,11 @@ const sectionVerMapa = document.getElementById("ver-mapa");
 const mapa = document.getElementById("mapa");
 
 let jugadorId = null;
+let enemigoId = null;
 let pets = [];
 let ataqueJugador = [];
 let ataqueEnemigo = [];
+let petsEnemigos = [];
 let opciónPet;
 let inputDraco;
 let inputMolly;
@@ -65,7 +67,8 @@ mapa.width = anchoDelMapa;
 mapa.height = alturaEsperada;
 
 class Pet {
-  constructor(nombre, foto, fotoC, vida) {
+  constructor(nombre, foto, fotoC, vida, id = null) {
+    this.id = id;
     this.nombre = nombre;
     this.foto = foto;
     this.fotoC = fotoC;
@@ -93,127 +96,71 @@ let Rex = new Pet("Rex", "./assets/rexF.png", "./assets/rexC.png", 5);
 let Tron = new Pet("Tron", "./assets/tronF.png", "./assets/tronC.png", 5);
 let Mota = new Pet("Mota", "./assets/motaF.png", "./assets/motaC.png", 5);
 
-let DracoEnemigo = new Pet(
-  "Draco",
-  "./assets/dracoF.png",
-  "./assets/dracoC.png",
-  5
-);
-let MollyEnemigo = new Pet(
-  "Molly",
-  "./assets/mollyF.png",
-  "./assets/mollyC.png",
-  5
-);
-let VioleEnemigo = new Pet(
-  "Viole",
-  "./assets/violeF.png",
-  "./assets/violeC.png",
-  5
-);
-let RexEnemigo = new Pet("Rex", "./assets/rexF.png", "./assets/rexC.png", 5);
-let TronEnemigo = new Pet(
-  "Tron",
-  "./assets/tronF.png",
-  "./assets/tronC.png",
-  5
-);
-let MotaEnemigo = new Pet(
-  "Mota",
-  "./assets/motaF.png",
-  "./assets/motaC.png",
-  5
-);
+const DRACO_ATAQUES = [
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "🌿", id: "boton-tierra" },
+];
 
-Draco.ataques.push(
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "🌿", id: "boton-tierra" }
-);
-DracoEnemigo.ataques.push(
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "🌿", id: "boton-tierra" }
-);
+Draco.ataques.push(...DRACO_ATAQUES);
+//DracoEnemigo.ataques.push(...DRACO_ATAQUES);
 
-Molly.ataques.push(
+const MOLLY_ATAQUES = [
   { nombre: "🌿", id: "boton-tierra" },
   { nombre: "🌿", id: "boton-tierra" },
   { nombre: "🌿", id: "boton-tierra" },
   { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "💦", id: "boton-agua" }
-);
-MollyEnemigo.ataques.push(
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "💦", id: "boton-agua" }
-);
+  { nombre: "💦", id: "boton-agua" },
+];
 
-Viole.ataques.push(
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🔥", id: "boton-fuego" }
-);
-VioleEnemigo.ataques.push(
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🔥", id: "boton-fuego" }
-);
+Molly.ataques.push(...MOLLY_ATAQUES);
+//MollyEnemigo.ataques.push(...MOLLY_ATAQUES);
 
-Rex.ataques.push(
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
+const VIOLE_ATAQUES = [
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "💦", id: "boton-agua" },
   { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "💦", id: "boton-agua" }
-);
-RexEnemigo.ataques.push(
   { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "💦", id: "boton-agua" }
-);
+];
 
-Tron.ataques.push(
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "🌿", id: "boton-tierra" }
-);
-TronEnemigo.ataques.push(
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "🔥", id: "boton-fuego" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "🌿", id: "boton-tierra" }
-);
+Viole.ataques.push(...VIOLE_ATAQUES);
+//VioleEnemigo.ataques.push(...VIOLE_ATAQUES);
 
-Mota.ataques.push(
+const REX_ATAQUES = [
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "🌿", id: "boton-tierra" },
+  { nombre: "💦", id: "boton-agua" },
+];
+
+Rex.ataques.push(...REX_ATAQUES);
+//RexEnemigo.ataques.push(...REX_ATAQUES);
+
+const TRON_ATAQUES = [
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "💦", id: "boton-agua" },
+  { nombre: "🌿", id: "boton-tierra" },
+];
+
+Tron.ataques.push(...TRON_ATAQUES);
+//TronEnemigo.ataques.push(...TRON_ATAQUES);
+
+MOTA_ATAQUES = [
   { nombre: "💦", id: "boton-agua" },
   { nombre: "💦", id: "boton-agua" },
   { nombre: "🌿", id: "boton-tierra" },
   { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🔥", id: "boton-fuego" }
-);
-MotaEnemigo.ataques.push(
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "💦", id: "boton-agua" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🌿", id: "boton-tierra" },
-  { nombre: "🔥", id: "boton-fuego" }
-);
+  { nombre: "🔥", id: "boton-fuego" },
+];
+
+Mota.ataques.push(...MOTA_ATAQUES);
+//MotaEnemigo.ataques.push(...MOTA_ATAQUES);
 
 pets.push(Draco, Molly, Viole, Rex, Tron, Mota);
 
@@ -241,7 +188,6 @@ function iniciarJuego() {
 
   botonSeleccionarMascota.addEventListener("click", seleccionarMascota);
   botonReiniciar.addEventListener("click", reiniciarJuego);
-
   unirseAlJuego();
 }
 
@@ -339,8 +285,33 @@ function secuenciaAtaque() {
         boton.style.background = "#000000";
         boton.disabled = true;
       }
-      ataqueAleatorioEnemigo();
+
+      if (ataqueJugador.length === 5) {
+        enviarAtaques();
+      }
     });
+  });
+}
+
+function enviarAtaques() {
+  fetch(`http://localhost:8080/pet/${jugadorId}/ataques`, {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ataques: ataqueJugador }),
+  });
+  intervalo = setInterval(obtenerAtaques, 50);
+}
+
+function obtenerAtaques() {
+  fetch(`http://localhost:8080/pet/${enemigoId}/ataques`).then(function (res) {
+    if (res.ok) {
+      res.json().then(function ({ ataques }) {
+        if (ataques.length === 5) {
+          ataqueEnemigo = ataques;
+          combate();
+        }
+      });
+    }
   });
 }
 
@@ -376,6 +347,8 @@ function indexAmbosOponentes(jugador, enemigo) {
 }
 
 function combate() {
+  clearInterval(intervalo);
+
   for (let i = 0; i < ataqueJugador.length; i++) {
     if (ataqueJugador[i] === ataqueEnemigo[i]) {
       indexAmbosOponentes(i, i);
@@ -453,24 +426,10 @@ function pintarPersonaje() {
 
   enviarPosición(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y);
 
-  DracoEnemigo.pintarPet();
-  MollyEnemigo.pintarPet();
-  VioleEnemigo.pintarPet();
-  RexEnemigo.pintarPet();
-  TronEnemigo.pintarPet();
-  MotaEnemigo.pintarPet();
-
-  if (
-    mascotaJugadorObjeto.velocidadX !== 0 ||
-    mascotaJugadorObjeto.velocidadY !== 0
-  ) {
-    revisarColisión(DracoEnemigo);
-    revisarColisión(MollyEnemigo);
-    revisarColisión(VioleEnemigo);
-    revisarColisión(RexEnemigo);
-    revisarColisión(TronEnemigo);
-    revisarColisión(MotaEnemigo);
-  }
+  petsEnemigos.forEach(function (pet) {
+    pet.pintarPet();
+    revisarColisión(pet);
+  });
 }
 
 function enviarPosición(x, y) {
@@ -478,6 +437,71 @@ function enviarPosición(x, y) {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ x, y }),
+  }).then(function (res) {
+    if (res.ok) {
+      res.json().then(function ({ enemigos }) {
+        petsEnemigos = enemigos.map(function (enemigo) {
+          console.log(enemigo);
+          let petEnemigo = null;
+          const petNombre = enemigo.pet.nombre || "";
+
+          if (petNombre === "Draco") {
+            petEnemigo = new Pet(
+              "Draco",
+              "./assets/dracoF.png",
+              "./assets/dracoC.png",
+              5,
+              enemigo.id
+            );
+          } else if (petNombre === "Molly") {
+            petEnemigo = new Pet(
+              "Molly",
+              "./assets/mollyF.png",
+              "./assets/mollyC.png",
+              5,
+              enemigo.id
+            );
+          } else if (petNombre === "Viole") {
+            petEnemigo = new Pet(
+              "Viole",
+              "./assets/violeF.png",
+              "./assets/violeC.png",
+              5,
+              enemigo.id
+            );
+          } else if (petNombre === "Rex") {
+            petEnemigo = new Pet(
+              "Rex",
+              "./assets/rexF.png",
+              "./assets/rexC.png",
+              5,
+              enemigo.id
+            );
+          } else if (petNombre === "Tron") {
+            petEnemigo = new Pet(
+              "Tron",
+              "./assets/tronF.png",
+              "./assets/tronC.png",
+              5,
+              enemigo.id
+            );
+          } else if (petNombre === "Tron") {
+            petEnemigo = new Pet(
+              "Mota",
+              "./assets/motaF.png",
+              "./assets/motaC.png",
+              5,
+              enemigo.id
+            );
+          }
+
+          petEnemigo.x = enemigo.x;
+          petEnemigo.y = enemigo.y;
+
+          return petEnemigo;
+        });
+      });
+    }
   });
 }
 
@@ -557,8 +581,11 @@ function revisarColisión(enemigo) {
   }
   detenerMovimiento();
   clearInterval(intervalo);
+
+  enemigoId = enemigo.id;
   secciónAtaques.style.display = "flex";
   sectionVerMapa.style.display = "none";
   seleccionarMascotaEnemigo(enemigo);
 }
+
 window.addEventListener("load", iniciarJuego);

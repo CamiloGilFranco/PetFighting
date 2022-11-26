@@ -21,6 +21,10 @@ class Jugador {
     this.x = x;
     this.y = y;
   }
+
+  asignarAtaques(ataques) {
+    this.ataques = ataques;
+  }
 }
 
 class Pet {
@@ -72,8 +76,48 @@ app.post("/pet/:jugadorId/posicion", (req, res) => {
     jugadores[jugadorIndex].actualizarPosición(x, y);
   }
 
+  const enemigos = jugadores.filter((jugador) => jugadorId !== jugador.id);
+
+  res.send({
+    enemigos,
+  });
+});
+
+app.post("/pet/:jugadorId/ataques", (req, res) => {
+  const jugadorId = req.params.jugadorId || "";
+  const ataques = req.body.ataques || [];
+
+  const jugadorIndex = jugadores.findIndex(
+    (jugador) => jugadorId === jugador.id
+  );
+
+  if (jugadorIndex >= 0) {
+    jugadores[jugadorIndex].asignarAtaques(ataques);
+  }
+
   res.end();
 });
+
+app.get("/pet/:jugadorId/ataques", (req, res) => {
+  const jugadorId = req.params.jugadorId || "";
+  const jugador = jugadores.find((jugador) => jugador.id === jugadorId);
+  res.send({
+    ataques: jugador.ataques || [],
+  });
+});
+
+function obtenerAtaques() {
+  fetch(`http://localhost:8080/pet/${enemigoId}/ataques`).then(function (res) {
+    if (res.ok) {
+      res.json().then(function ({ taques }) {
+        if (ataques.length === 5) {
+          ataqueEnemigo = ataques;
+          combate();
+        }
+      });
+    }
+  });
+}
 
 app.listen(8080, () => {
   console.log("Server run");
