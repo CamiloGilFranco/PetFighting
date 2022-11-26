@@ -50,7 +50,7 @@ let vidasJugador = 3;
 let lienzo = mapa.getContext("2d");
 let intervalo;
 let mapaFondo = new Image();
-mapaFondo.src = "/assets/map.png";
+mapaFondo.src = "./assets/map.png";
 let alturaEsperada;
 let anchoDelMapa = window.innerWidth - 20;
 const anchoMáximoMapa = 350;
@@ -86,34 +86,44 @@ class Pet {
   }
 }
 
-let Draco = new Pet("Draco", "/assets/dracoF.png", "/assets/dracoC.png", 5);
-let Molly = new Pet("Molly", "/assets/mollyF.png", "/assets/mollyC.png", 5);
-let Viole = new Pet("Viole", "/assets/violeF.png", "/assets/violeC.png", 5);
-let Rex = new Pet("Rex", "/assets/rexF.png", "/assets/rexC.png", 5);
-let Tron = new Pet("Tron", "/assets/tronF.png", "/assets/tronC.png", 5);
-let Mota = new Pet("Mota", "/assets/motaF.png", "/assets/motaC.png", 5);
+let Draco = new Pet("Draco", "./assets/dracoF.png", "./assets/dracoC.png", 5);
+let Molly = new Pet("Molly", "./assets/mollyF.png", "./assets/mollyC.png", 5);
+let Viole = new Pet("Viole", "./assets/violeF.png", "./assets/violeC.png", 5);
+let Rex = new Pet("Rex", "./assets/rexF.png", "./assets/rexC.png", 5);
+let Tron = new Pet("Tron", "./assets/tronF.png", "./assets/tronC.png", 5);
+let Mota = new Pet("Mota", "./assets/motaF.png", "./assets/motaC.png", 5);
 
 let DracoEnemigo = new Pet(
   "Draco",
-  "/assets/dracoF.png",
-  "/assets/dracoC.png",
+  "./assets/dracoF.png",
+  "./assets/dracoC.png",
   5
 );
 let MollyEnemigo = new Pet(
   "Molly",
-  "/assets/mollyF.png",
-  "/assets/mollyC.png",
+  "./assets/mollyF.png",
+  "./assets/mollyC.png",
   5
 );
 let VioleEnemigo = new Pet(
   "Viole",
-  "/assets/violeF.png",
-  "/assets/violeC.png",
+  "./assets/violeF.png",
+  "./assets/violeC.png",
   5
 );
-let RexEnemigo = new Pet("Rex", "/assets/rexF.png", "/assets/rexC.png", 5);
-let TronEnemigo = new Pet("Tron", "/assets/tronF.png", "/assets/tronC.png", 5);
-let MotaEnemigo = new Pet("Mota", "/assets/motaF.png", "/assets/motaC.png", 5);
+let RexEnemigo = new Pet("Rex", "./assets/rexF.png", "./assets/rexC.png", 5);
+let TronEnemigo = new Pet(
+  "Tron",
+  "./assets/tronF.png",
+  "./assets/tronC.png",
+  5
+);
+let MotaEnemigo = new Pet(
+  "Mota",
+  "./assets/motaF.png",
+  "./assets/motaC.png",
+  5
+);
 
 Draco.ataques.push(
   { nombre: "🔥", id: "boton-fuego" },
